@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p id="header">Σχολεία Κλειστά Λόγο Του Covid-19</p>
+    <p id="header">Σχολεία Κλειστά Λόγω Του Covid-19</p>
     <p id="credits">designed by <a href="https://github.com/pasenidis">ed</a> & <a href="https://github.com/TasosY2K" target="_blank">tasos</a></p>
     <div id="card-container">
       <div v-for="i in schoolData" :key="i">
