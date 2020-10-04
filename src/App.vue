@@ -31,7 +31,7 @@ export default {
         }
         this.schoolData = schoolResults
       } else {
-        axios.get(`http://fuck.plasmasearch.cf`).then(response => this.schoolData = response.data.schools);  
+        this.schoolData = this.schoolDataOrigin;  
       }
     }
   },
