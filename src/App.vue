@@ -25,7 +25,7 @@ export default {
       if (this.searchString) {
         let schoolResults = []
         for (let i = 0; i < this.schoolDataOrigin.length; i++) {
-          if (this.schoolDataOrigin[i].name.includes(this.searchString)) {
+          if (this.schoolDataOrigin[i].name.toLowerCase().includes(this.searchString.toLowerCase())) {
             schoolResults.push(this.schoolDataOrigin[i])
           }
         }
