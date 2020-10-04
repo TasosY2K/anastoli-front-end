@@ -2,6 +2,7 @@
   <div>
     <p id="header">Σχολεία Κλειστά Λόγο Του Covid-19</p>
     <p id="credits">designed by <a href="https://github.com/pasenidis">ed</a> & <a href="https://github.com/TasosY2K" target="_blank">tasos</a></p>
+    <input type="text" id="search-box" placeholder="Αναζήτησε σχολεία" v-model="searchString" @input="this.searchSchool">
     <div id="card-container">
       <div v-for="i in schoolData" :key="i">
         <Card :info="i"/>
@@ -19,13 +20,33 @@ export default {
   components: {
     Card
   },
+  methods: {
+    searchSchool() {
+      if (this.searchString) {
+        let schoolResults = []
+        for (let i = 0; i < this.schoolDataOrigin.length; i++) {
+          if (this.schoolDataOrigin[i].name.includes(this.searchString)) {
+            schoolResults.push(this.schoolDataOrigin[i])
+          }
+        }
+        this.schoolData = schoolResults
+      } else {
+        axios.get(`http://fuck.plasmasearch.cf`).then(response => this.schoolData = response.data.schools);  
+      }
+    }
+  },
   data () {
     return {
+      searchString: null,
+      schoolDataOrigin: null,
       schoolData: null
     }
   },
   mounted () {
-    axios.get('http://fuck.plasmasearch.cf').then(response => (this.schoolData = response.data.schools))
+    axios.get(`http://fuck.plasmasearch.cf`).then(response => {
+      this.schoolData = response.data.schools
+      this.schoolDataOrigin = response.data.schools
+    });  
   }
 }
 </script>
@@ -60,5 +81,29 @@ export default {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+#search-box {
+  width: 17em;
+  font-size: 1.1em;
+  font-family: 'Comfortaa', cursive;
+  padding: 0.6em;
+  background-color: #292929;
+  border-radius: 8px;
+  transition-duration: 0.3s;
+  border: none;
+  margin-bottom: 1rem;
+  color: #e9e9e9;
+}
+
+#search-box:focus {
+  outline: none;
+}
+
+#search-box:hover {
+  transform: translateY(-1px);
+  -webkit-box-shadow: 0px 7px 15px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 7px 15px -2px rgba(0,0,0,0.75);
+  box-shadow: 0px 7px 15px -2px rgba(0,0,0,0.75);
 }
 </style>
